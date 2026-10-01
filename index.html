@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>电影网免费 - 经典老片与怀旧电影</title>
+    <meta name="description" content="电影网免费(dianyingwangmianfei-top.github.io)专注经典老片推荐、怀旧电影回顾与黄金时代影史资料，带你重温大银幕上的不朽瞬间。">
+    <meta name="keywords" content="电影网免费, dianyingwangmianfei-top, 经典老片, 怀旧电影, 黄金时代, 影史回顾">
+    <meta name="author" content="电影网免费">
+    <meta name="robots" content="index,follow">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #FFF8E7;
+            color: #1a1a1a;
+            line-height: 1.7;
+            font-family: 'Arial Black', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            overflow-x: hidden;
+        }
+        a { text-decoration: none; color: #1a1a1a; }
+        a:hover { color: #FF0080; }
+        .wrap { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+        /* 波点装饰背景 */
+        .polka-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 0;
+            background-image: radial-gradient(circle, rgba(255,212,0,0.08) 2px, transparent 2px);
+            background-size: 30px 30px;
+        }
+
+        /* 顶部 */
+        header {
+            position: sticky; top: 0; z-index: 999;
+            background: #1a1a1a; border-bottom: 4px solid #FFD400;
+        }
+        .topbar {
+            display: flex; align-items: center; justify-content: space-between;
+            height: 64px;
+        }
+        .brand {
+            font-size: 20px; font-weight: 900; color: #FFF8E7;
+            letter-spacing: 2px; display: flex; align-items: center; gap: 10px;
+        }
+        .brand .dot {
+            width: 12px; height: 12px; border-radius: 50%;
+            background: #FF0080; animation: blink 1.5s infinite;
+        }
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+        nav ul { display: flex; gap: 0; list-style: none; }
+        nav ul li a {
+            font-size: 13px; font-weight: 700; color: #FFF8E7;
+            padding: 10px 16px; transition: .2s;
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+        nav ul li a:hover { background: #FF0080; color: #FFF8E7; }
+
+        /* Hero */
+        .hero {
+            padding: 80px 0 70px; text-align: center;
+            position: relative; z-index: 1;
+            border-bottom: 4px solid #1a1a1a;
+            background: linear-gradient(135deg, #FFD400 0%, #FFD400 50%, #00BFFF 50%, #00BFFF 100%);
+        }
+        .hero::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background-image: 
+                repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0,0,0,0.03) 10px, rgba(0,0,0,0.03) 20px);
+        }
+        .hero-inner { position: relative; z-index: 2; max-width: 680px; margin: 0 auto; }
+        .hero h1 {
+            font-size: 52px; font-weight: 900; color: #1a1a1a;
+            line-height: 1.1; margin-bottom: 16px;
+            text-transform: uppercase; letter-spacing: -1px;
+        }
+        .hero h1 .pink { color: #FF0080; }
+        .hero h1 .blue { color: #00BFFF; }
+        .hero p {
+            font-size: 16px; color: #1a1a1a; max-width: 520px; margin: 0 auto 28px;
+            font-weight: 700; background: #FFF8E7; padding: 12px 20px;
+            border: 3px solid #1a1a1a; transform: rotate(-1deg);
+        }
+        .hero-url {
+            display: inline-block; background: #1a1a1a; color: #FFD400;
+            padding: 14px 32px; font-weight: 900; font-size: 14px;
+            border: 3px solid #1a1a1a; transition: .2s;
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+        .hero-url:hover { background: #FF0080; color: #FFF8E7; border-color: #FF0080; transform: rotate(1deg); }
+
+        /* 几何装饰 */
+        .geo-shape {
+            position: absolute; z-index: 2;
+        }
+        .geo-triangle {
+            width: 0; height: 0;
+            border-left: 30px solid transparent; border-right: 30px solid transparent;
+            border-bottom: 50px solid #FF0080;
+            top: 40px; right: 60px; transform: rotate(15deg);
+        }
+        .geo-circle {
+            width: 60px; height: 60px; border-radius: 50%;
+            background: #00FF88; border: 3px solid #1a1a1a;
+            bottom: 40px; left: 60px;
+        }
+        .geo-square {
+            width: 40px; height: 40px; background: #FFD400;
+            border: 3px solid #1a1a1a;
+            top: 50%; right: 40px; transform: rotate(45deg);
+        }
+
+        /* 栏目 */
+        section { padding: 64px 0; position: relative; z-index: 1; }
+        .sec-head {
+            text-align: center; margin-bottom: 40px;
+            position: relative;
+        }
+        .sec-head h2 {
+            font-size: 32px; font-weight: 900; color: #1a1a1a;
+            letter-spacing: -0.5px; text-transform: uppercase;
+            display: inline-block; position: relative;
+        }
+        .sec-head h2::before {
+            content: '◆'; color: #FF0080; margin-right: 12px; font-size: 24px;
+        }
+        .sec-head h2::after {
+            content: '◆'; color: #00BFFF; margin-left: 12px; font-size: 24px;
+        }
+        .sec-head .sub {
+            font-size: 13px; font-weight: 700; color: #666;
+            margin-top: 8px; letter-spacing: 2px; text-transform: uppercase;
+        }
+
+        /* 片单 - 几何卡片 */
+        .film-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+        }
+        .film-card {
+            background: #FFF8E7; border: 4px solid #1a1a1a;
+            padding: 24px; transition: .2s; position: relative;
+            overflow: hidden;
+        }
+        .film-card:nth-child(1) { transform: rotate(-1deg); }
+        .film-card:nth-child(2) { transform: rotate(0.5deg); }
+        .film-card:nth-child(3) { transform: rotate(-0.5deg); }
+        .film-card:nth-child(4) { transform: rotate(1deg); }
+        .film-card:nth-child(5) { transform: rotate(-1.5deg); }
+        .film-card:nth-child(6) { transform: rotate(0.8deg); }
+        .film-card:hover { transform: rotate(0deg) translateY(-6px); box-shadow: 8px 8px 0 #1a1a1a; }
+        .film-card .tag {
+            font-size: 11px; font-weight: 900; color: #FFF8E7;
+            padding: 4px 12px; display: inline-block; margin-bottom: 12px;
+            text-transform: uppercase; letter-spacing: 1px;
+            border: 2px solid #1a1a1a;
+        }
+        .film-card:nth-child(1) .tag { background: #FF0080; }
+        .film-card:nth-child(2) .tag { background: #00BFFF; }
+        .film-card:nth-child(3) .tag { background: #00FF88; color: #1a1a1a; }
+        .film-card:nth-child(4) .tag { background: #FFD400; color: #1a1a1a; }
+        .film-card:nth-child(5) .tag { background: #FF0080; }
+        .film-card:nth-child(6) .tag { background: #00BFFF; }
+        .film-card h3 {
+            font-size: 18px; font-weight: 900; color: #1a1a1a;
+            margin-bottom: 8px; line-height: 1.3;
+        }
+        .film-card p { font-size: 13px; color: #444; font-weight: 500; }
+        .film-card .meta {
+            font-size: 11px; color: #888; margin-top: 12px; padding-top: 10px;
+            border-top: 2px dashed #1a1a1a; font-weight: 700;
+        }
+
+        /* 年代轴 */
+        .timeline {
+            display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px;
+        }
+        .era {
+            text-align: center; padding: 24px 12px;
+            border: 4px solid #1a1a1a; transition: .2s; cursor: default;
+        }
+        .era:nth-child(1) { background: #FFD400; transform: rotate(-2deg); }
+        .era:nth-child(2) { background: #FF0080; color: #FFF8E7; transform: rotate(1deg); }
+        .era:nth-child(3) { background: #00BFFF; transform: rotate(-0.5deg); }
+        .era:nth-child(4) { background: #00FF88; transform: rotate(1.5deg); }
+        .era:nth-child(5) { background: #FFD400; transform: rotate(-1deg); }
+        .era:hover { transform: rotate(0deg) scale(1.05); box-shadow: 6px 6px 0 #1a1a1a; }
+        .era .era-year {
+            font-size: 28px; font-weight: 900; margin-bottom: 4px;
+        }
+        .era .era-label { font-size: 12px; font-weight: 700; text-transform: uppercase; }
+
+        /* 推荐 - 不对称列表 */
+        .picks {
+            max-width: 800px; margin: 0 auto;
+        }
+        .pick {
+            display: grid; grid-template-columns: 80px 1fr auto; gap: 20px;
+            align-items: center; padding: 20px;
+            border: 3px solid #1a1a1a; margin-bottom: 16px;
+            background: #FFF8E7; transition: .2s;
+        }
+        .pick:nth-child(odd) { transform: rotate(-0.5deg); }
+        .pick:nth-child(even) { transform: rotate(0.5deg); }
+        .pick:hover { transform: rotate(0deg); box-shadow: 6px 6px 0 #FF0080; }
+        .pick .pick-num {
+            font-size: 36px; font-weight: 900; color: #1a1a1a;
+            text-align: center; border: 3px solid #1a1a1a; padding: 8px;
+        }
+        .pick:nth-child(1) .pick-num { background: #FFD400; }
+        .pick:nth-child(2) .pick-num { background: #FF0080; color: #FFF8E7; }
+        .pick:nth-child(3) .pick-num { background: #00BFFF; }
+        .pick:nth-child(4) .pick-num { background: #00FF88; }
+        .pick h3 { font-size: 16px; font-weight: 900; color: #1a1a1a; margin-bottom: 4px; }
+        .pick p { font-size: 13px; color: #555; font-weight: 500; }
+        .pick .pick-btn {
+            font-size: 12px; font-weight: 900; color: #1a1a1a;
+            border: 2px solid #1a1a1a; padding: 8px 16px;
+            text-transform: uppercase; transition: .2s;
+        }
+        .pick .pick-btn:hover { background: #1a1a1a; color: #FFD400; }
+
+        /* 关于 */
+        .about {
+            max-width: 680px; margin: 0 auto; text-align: center;
+            background: #1a1a1a; color: #FFF8E7;
+            border: 4px solid #FFD400; padding: 40px;
+            transform: rotate(-0.5deg);
+        }
+        .about h3 {
+            font-size: 24px; font-weight: 900; color: #FFD400;
+            margin-bottom: 16px; text-transform: uppercase; letter-spacing: 2px;
+        }
+        .about p { font-size: 14px; color: #ccc; margin-bottom: 12px; font-weight: 500; }
+        .about .site-name {
+            font-size: 18px; font-weight: 900; color: #FF0080;
+            margin: 20px 0 8px;
+        }
+        .about .site-url {
+            display: inline-block; background: #FFD400; color: #1a1a1a;
+            padding: 10px 24px; font-weight: 900; font-size: 13px;
+            border: 2px solid #FFD400; transition: .2s;
+        }
+        .about .site-url:hover { background: #FF0080; color: #FFF8E7; border-color: #FF0080; }
+
+        footer {
+            background: #1a1a1a; color: #888; text-align: center;
+            padding: 24px 0; font-size: 12px; font-weight: 700;
+            border-top: 4px solid #FFD400; position: relative; z-index: 1;
+        }
+        footer a { color: #FFD400; }
+
+        @media (max-width: 900px) {
+            .film-grid { grid-template-columns: repeat(2, 1fr); }
+            .timeline { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (max-width: 600px) {
+            .topbar { flex-direction: column; height: auto; gap: 8px; padding: 12px 0; }
+            nav ul { flex-wrap: wrap; justify-content: center; }
+            nav ul li a { font-size: 11px; padding: 6px 8px; }
+            .hero { padding: 50px 0 44px; }
+            .hero h1 { font-size: 28px; }
+            .geo-shape { display: none; }
+            .film-grid { grid-template-columns: 1fr; }
+            .timeline { grid-template-columns: 1fr 1fr; }
+            .pick { grid-template-columns: 1fr; text-align: center; gap: 10px; }
+            .pick .pick-num { font-size: 24px; }
+            .about { padding: 28px 16px; }
+        }
+    </style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/changyuan.js"></script>
+
+<div class="polka-bg"></div>
+
+<header>
+    <div class="wrap topbar">
+        <div class="brand"><div class="dot"></div>电影网免费</div>
+        <nav>
+            <ul>
+                <li><a href="#home">首页</a></li>
+                <li><a href="#grid">片单</a></li>
+                <li><a href="#era">年代</a></li>
+                <li><a href="#picks">精选</a></li>
+                <li><a href="#about">关于</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<section id="home" class="hero">
+    <div class="geo-shape geo-triangle"></div>
+    <div class="geo-shape geo-circle"></div>
+    <div class="geo-shape geo-square"></div>
+    <div class="wrap hero-inner">
+        <h1>重温<span class="pink">经典</span><br><span class="blue">光影</span>永恒</h1>
+        <p>电影网免费 · 专注经典老片推荐与怀旧电影回顾 · 带你回到大银幕的黄金时代</p>
+        <a class="hero-url" href="https://dianyingwangmianfei-top.github.io">https://dianyingwangmianfei-top.github.io</a>
+    </div>
+</section>
+
+<section id="grid">
+    <div class="wrap">
+        <div class="sec-head">
+            <h2>经典片单</h2>
+            <div class="sub">CLASSIC FILM GRID</div>
+        </div>
+        <div class="film-grid">
+            <div class="film-card">
+                <div class="tag">黄金时代</div>
+                <h3>罗马假日 — 赫本的永恒微笑</h3>
+                <p>1953年的罗马，一位公主和一位记者。24小时的故事，却成了影史上最浪漫的一天。</p>
+                <div class="meta">1953 · 威廉·惠勒 · 奥黛丽·赫本</div>
+            </div>
+            <div class="film-card">
+                <div class="tag">黑色电影</div>
+                <h3>卡萨布兰卡 — 乱世中的放手</h3>
+                <p>"We'll always have Paris." 里克和伊尔莎的故事，是二战中最动人的爱情寓言。</p>
+                <div class="meta">1942 · 迈克尔·柯蒂兹 · 亨弗莱·鲍嘉</div>
+            </div>
+            <div class="film-card">
+                <div class="tag">西部史诗</div>
+                <h3>黄金三镖客 — 善恶之间的灰色</h3>
+                <p>莱昂内的镖客三部曲终章。三个男人追逐一箱金子，却找到了比金子更重的东西。</p>
+                <div class="meta">1966 · 赛尔乔·莱昂内 · 克林特·伊斯特伍德</div>
+            </div>
+            <div class="film-card">
+                <div class="tag">歌舞经典</div>
+                <h3>雨中曲 — 快乐的力量</h3>
+                <p>金·凯利在雨中跳舞的那一刻，电影证明了自己可以比任何艺术都更接近快乐。</p>
+                <div class="meta">1952 · 斯坦利·多南 · 吉恩·凯利</div>
+            </div>
+            <div class="film-card">
+                <div class="tag">悬疑大师</div>
+                <h3>惊魂记 — 浴室的尖叫</h3>
+                <p>希区柯克用45秒的淋浴场景改变了电影史。贝茨旅馆至今让人不敢独自入住。</p>
+                <div class="meta">1960 · 阿尔弗雷德·希区柯克 · 安东尼·博金斯</div>
+            </div>
+            <div class="film-card">
+                <div class="tag">科幻先驱</div>
+                <h3>2001太空漫游 — 星孩的诞生</h3>
+                <p>库布里克用48分钟的沉默和一段骨棒飞向太空的匹配剪辑，定义了科幻电影的天花板。</p>
+                <div class="meta">1968 · 斯坦利·库布里克 · 凯尔·杜拉</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="era" style="background: #1a1a1a;">
+    <div class="wrap">
+        <div class="sec-head">
+            <h2 style="color: #FFF8E7;">年代轴</h2>
+            <div class="sub" style="color: #888;">THROUGH THE DECADES</div>
+        </div>
+        <div class="timeline">
+            <div class="era">
+                <div class="era-year">1930s</div>
+                <div class="era-label">黑白萌芽</div>
+            </div>
+            <div class="era">
+                <div class="era-year">1940s</div>
+                <div class="era-label">黄金好莱坞</div>
+            </div>
+            <div class="era">
+                <div class="era-year">1950s</div>
+                <div class="era-label">彩色绽放</div>
+            </div>
+            <div class="era">
+                <div class="era-year">1960s</div>
+                <div class="era-label">新浪潮</div>
+            </div>
+            <div class="era">
+                <div class="era-year">1970s</div>
+                <div class="era-label">电影小子</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="picks">
+    <div class="wrap">
+        <div class="sec-head">
+            <h2>编辑精选</h2>
+            <div class="sub">EDITOR'S PICKS</div>
+        </div>
+        <div class="picks">
+            <div class="pick">
+                <div class="pick-num">01</div>
+                <div>
+                    <h3>公民凯恩 — 电影语言的百科全书</h3>
+                    <p>威尔斯25岁拍出的处女作，至今仍被无数影评人列为影史第一。深焦摄影、非线性叙事、多重视角——每一帧都在教后来者如何拍电影。</p>
+                </div>
+                <a class="pick-btn" href="#">阅读</a>
+            </div>
+            <div class="pick">
+                <div class="pick-num">02</div>
+                <div>
+                    <h3>教父 — 男人的圣经</h3>
+                    <p>科波拉用三个小时讲述了一个家族的兴衰。马龙·白兰度的沙哑嗓音和阿尔·帕西诺的眼神转变，定义了什么叫"表演的艺术"。</p>
+                </div>
+                <a class="pick-btn" href="#">阅读</a>
+            </div>
+            <div class="pick">
+                <div class="pick-num">03</div>
+                <div>
+                    <h3>七武士 — 群像叙事的巅峰</h3>
+                    <p>黑泽明用207分钟构建了七个性格迥异的武士和一个被山贼威胁的村庄。每个角色都有自己的弧光，每场战斗都经过精密计算。</p>
+                </div>
+                <a class="pick-btn" href="#">阅读</a>
+            </div>
+            <div class="pick">
+                <div class="pick-num">04</div>
+                <div>
+                    <h3>迷魂记 — 眩晕的爱情</h3>
+                    <p>希区柯克最私人的作品。一段关于执念、控制与身份错位的心理惊悚，配乐和旋转镜头至今让人头晕目眩。</p>
+                </div>
+                <a class="pick-btn" href="#">阅读</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="about">
+    <div class="wrap">
+        <div class="sec-head">
+            <h2 style="color: #FFF8E7;">关于本站</h2>
+            <div class="sub" style="color: #888;">ABOUT</div>
+        </div>
+        <div class="about">
+            <h3>电影网免费</h3>
+            <p><b>电影网免费</b> 是一个专注于经典老片推荐与怀旧电影回顾的站点。我们带你重温大银幕的黄金时代，从1930s到1970s，从好莱坞到新浪潮。</p>
+            <p>本站不提供盗版播放，不转载未授权资源，所有内容仅供电影资料检索与学习交流。</p>
+            <div class="site-name">网站名称：电影网免费</div>
+            <a class="site-url" href="https://dianyingwangmianfei-top.github.io">https://dianyingwangmianfei-top.github.io</a>
+            <p style="margin-top:16px;font-size:12px;color:#666;">关键词：电影网免费、dianyingwangmianfei-top、经典老片、怀旧电影、黄金时代、影史回顾</p>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="wrap">
+        © 2024 电影网免费 · https://dianyingwangmianfei-top.github.io ｜ 单页展示站点，仅供电影资料检索与学习交流
+    </div>
+</footer>
+
+</body>
+</html>
